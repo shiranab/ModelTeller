@@ -7,3 +7,8 @@ Possible nucleotide models: JC, F81, K2P/K80, HKY, SYM, and GTR -- all with an a
 Output:
 1. The best predicted model and the ranking of alternative models, in case that you cannot use the best model.
 2. The maximum-likelihood tree, reconstructed using the best model.
+
+Prerequisites:
+PhyML3 from 
+Python-3
+modules: h2o.ai, ete3, numpy, scipy
