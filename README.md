@@ -11,4 +11,4 @@ Output:
 Prerequisites:
 PhyML3 from 
 Python-3
-modules: h2o.ai, ete3, numpy, scipy
+modules: h2o.ai, ete3, numpy, scipy, biopython
