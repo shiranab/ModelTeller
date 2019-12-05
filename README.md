@@ -5,6 +5,7 @@ ModelTeller extracts features from the input nucleotide multiple sequence alignm
 Possible nucleotide models: JC, F81, K2P/K80, HKY, SYM, and GTR -- all with an additional parameter for the proportion of invariable sites (+I), rate-heterogeneity across sites sampled from the gamma distribution (+G), both (+I+G), or none.
 
 # Output:
+The output files will be located in the directory in which you execute ModelTeller.
 1. The best predicted model and the ranking of alternative models, in case that you cannot use the best model.
 2. The maximum-likelihood tree, reconstructed using the best model.
 
@@ -24,7 +25,7 @@ Verify that:
 4. Run modelTeller!
 
 # How to run?
-## The -m parameter:
+## The -m <msa_file> parameter:
 A mandatory input for ModelTeller is an MSA file in a nucleotide format, in one of the following formats: fasta, phylip (interleaved or sequential), clustel, emboss, nexus, Ig, nexus, mauve, and Stockholm.
 ## Without any additional parameters
 this option will rapidly select a single model for maximum-likelihood phylogeny reconstruction. The maximum-likelihood phylogeny, i.e., the model parameters, the branch-lengths, and the topology will be optimized for you after the model is predicted.
@@ -35,5 +36,7 @@ if you have a good, validated topology for your data, please provide it and Mode
 
 # Examples:
 python modelteller.py -m example/test_msa.phy
+
 python modelteller.py -m example/test_msa.phy -g
+
 python modelteller.py -m example/test_msa.phy -u example/test_tree.txt
