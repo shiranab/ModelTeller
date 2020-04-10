@@ -5,13 +5,12 @@ from Bio import AlignIO
 from Bio.Align import AlignInfo
 from ete3 import Tree
 import ete3.coretype.tree
-import h2o
 from collections import Counter
 
 
 script_dir = os.path.dirname(__file__)
-MODELTELLER_DRF_MODEL = os.path.join(script_dir, 'drf_models','ModelTeller_model')
-MODELTELLERg_DRF_MODEL = os.path.join(script_dir, 'drf_models','ModelTellerG_model')
+MODELTELLER_RF_MODEL = os.path.join(script_dir, 'rf_models','ModelTeller_model.pkl')
+MODELTELLERg_RF_MODEL = os.path.join(script_dir, 'rf_models','ModelTellerG_model.pkl')
 PHYML_SCRIPT = os.path.join(script_dir, "phyml_exe", "PhyML_3.0_linux64")
 
 

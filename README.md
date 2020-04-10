@@ -11,17 +11,17 @@ The output files will be located in the directory in which you execute ModelTell
 
 # Prerequisites:
 1. Python-3.5 or newer
-2. python modules: h2o.ai, ete3, argparse, numpy, scipy, biopython
+2. python modules: sklearn, ete3, argparse, numpy, scipy, biopython, pickle
 3. Phyml (can be found in our code, in directory phyml_exe).
 
 # How to install?
 1. download the ModelTeller code with all its scripts and directories.
-2. download the cached ModelTeller model from: https://modelteller.tau.ac.il/modelteller_drf_models.tar.gz
+2. download the cached ModelTeller model from: https://modelteller.tau.ac.il/modelteller_rf_models.tar.gz
 and unzip it in the location of the script.
 3. The definitions.py file contains the paths to the ModelTeller trained model (step 2 above) and the phyml executables.
 Verify that: 
 - The Phyml exe that is suitable for your OS is defined
-- The ModelTeller trained model is located in the directory "drf_models"
+- The ModelTeller trained model is located in the directory "rf_models"
 4. Run modelTeller!
 
 # How to run?

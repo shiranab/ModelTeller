@@ -1,3 +1,4 @@
+import pickle
 import traceback
 
 from definitions import *
@@ -51,19 +52,15 @@ def validate_input(msa_file, user_tree_file):
 	return msa_obj
 
 
-def predict_h2o(ext_df, drf_model_path):
+def predict_sklearn(ext_df, rf_model_path):
+	with open(rf_model_path, "rb") as pklr:
+		clf = pickle.load(pklr)
 
 	try:
-		h2o.init(max_mem_size="8G")
-		covtype_df = h2o.H2OFrame(ext_df[FEATURES_TO_INCLUDE])
-		drf_model = h2o.load_model(drf_model_path)
-
-		ext_df["pred_Bs"] = drf_model.predict(covtype_df).as_data_frame()
+		ext_df["pred_Bs"] = clf.predict(ext_df[FEATURES_TO_INCLUDE])
 	except:
 		exc_type, exc_value, exc_traceback = sys.exc_info()
 		traceback.print_exception(exc_type, exc_value, exc_traceback, file=sys.stdout)
-	finally:
-		h2o.cluster().shutdown(prompt=False)
 
 	return
 
@@ -78,11 +75,11 @@ def main(msa_obj, msa_filepath, GTRIG_topology, user_tree_file):
 	"""
 	ext_df, features_tree_file = compute_features.prepare_features_df(msa_obj, msa_filepath, GTRIG_topology, user_tree_file)
 	if not GTRIG_topology:
-		drf_model_path = MODELTELLER_DRF_MODEL
+		rf_model_path = MODELTELLER_RF_MODEL
 	else:
-		drf_model_path = MODELTELLERg_DRF_MODEL
+		rf_model_path = MODELTELLERg_RF_MODEL
 
-	predict_h2o(ext_df, drf_model_path)
+	predict_sklearn(ext_df, rf_model_path)
 
 	probs_df = ext_df.pivot(index='index', columns='model', values='pred_Bs')[ALL_PHYML_MODELS]
 	ranked_df = pd.DataFrame.rank(probs_df, axis=1, method="min")
@@ -91,7 +88,7 @@ def main(msa_obj, msa_filepath, GTRIG_topology, user_tree_file):
 	# save features nicely
 	ext_df.drop(["model_matrix", "model_F", "model_I", "model_G"], inplace=True, axis=1)
 	ext_df.rename(mapper=FEATURE_NAMES_MAPPING, axis="columns", inplace=True)
-	ext_df.to_csv("features_with_models_rankings.csv")
+	ext_df.to_csv(msa_filepath + "features_with_models_rankings.csv")
 
 	selected_model = ext_df.loc[ext_df["model_rank"]==1, "model"].to_list()[0] # in case there multiple minimals, take the first
 	logger.info("Success: ModelTeller selected model is: " + selected_model)
